@@ -45,7 +45,6 @@ export default function App() {
     }
 
     if (isValid) {
-      // Aquí puedes manejar el inicio de sesión, por ejemplo, hacer una solicitud a una API
       Alert.alert('Inicio de sesión exitoso');
     }
   };
