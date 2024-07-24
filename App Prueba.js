@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, Text, View, TextInput, Dimensions, TouchableOpacity, ActivityIndicator, Alert } from 'react-native';
+import { StyleSheet, Text, View, TextInput, Dimensions, TouchableOpacity, ActivityIndicator, ImageBackground, Alert } from 'react-native';
 import * as Font from 'expo-font';
 import { StatusBar } from 'expo-status-bar';
 
@@ -15,6 +15,7 @@ export default function App() {
   const loadFonts = async () => {
     await Font.loadAsync({
       'PlaywriteDKLoopet': require('./assets/fonts/PlaywriteDKLoopet-VariableFont_wght.ttf'),
+      'CrimsonText': require('./assets/fonts/CrimsonText-Regular.ttf'),
     });
     setFontsLoaded(true);
   };
@@ -45,7 +46,7 @@ export default function App() {
     }
 
     if (isValid) {
-      // Aquí puedes manejar el inicio de sesión, por ejemplo, hacer una solicitud a una API
+      
       Alert.alert('Inicio de sesión exitoso');
     }
   };
@@ -55,85 +56,102 @@ export default function App() {
   }
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.titulo}>Luz & Color</Text>
-      <Text style={styles.subTitle}>INICIA SESIÓN CON TU CUENTA</Text>
-      <TextInput
-        placeholder='Tu correo electrónico'
-        style={[styles.textInput, emailError && { borderColor: 'red', borderWidth: 1 }]}
-        value={email}
-        onChangeText={setEmail}
-        keyboardType='email-address'
-      />
-      {emailError ? <Text style={styles.errorText}>{emailError}</Text> : null}
-      <TextInput
-        placeholder='Contraseña'
-        style={[styles.textInput, passwordError && { borderColor: 'red', borderWidth: 1 }]}
-        value={password}
-        onChangeText={setPassword}
-        secureTextEntry={true}
-      />
-      {passwordError ? <Text style={styles.errorText}>{passwordError}</Text> : null}
-      <Text style={styles.forgotPassword}>Olvidaste tu contraseña</Text>
-      <TouchableOpacity style={styles.button} onPress={handleLogin}>
-        <Text style={styles.buttonText}>INICIAR</Text>
-      </TouchableOpacity>
-      <StatusBar style="auto" />
-    </View>
+    <ImageBackground
+      source={require('./assets/images/background.jpg')} 
+      style={styles.backgroundImage}
+    >
+      <View style={styles.overlayContainer}>
+        <View style={styles.container}>
+          <Text style={styles.titulo}>Luz & Color</Text>
+          <Text style={styles.subTitle}>INICIA SESIÓN CON TU CUENTA</Text>
+          <TextInput
+            placeholder='Tu correo electrónico'
+            style={[styles.textInput, emailError && { borderColor: 'red', borderWidth: 1 }]}
+            value={email}
+            onChangeText={setEmail}
+            keyboardType='email-address'
+          />
+          {emailError ? <Text style={styles.errorText}>{emailError}</Text> : null}
+          <TextInput
+            placeholder='Contraseña'
+            style={[styles.textInput, passwordError && { borderColor: 'red', borderWidth: 1 }]}
+            value={password}
+            onChangeText={setPassword}
+            secureTextEntry={true}
+          />
+          {passwordError ? <Text style={styles.errorText}>{passwordError}</Text> : null}
+          <Text style={styles.forgotPassword}>Olvidaste tu contraseña</Text>
+          <TouchableOpacity style={styles.button} onPress={handleLogin}>
+            <Text style={styles.buttonText}>INICIAR</Text>
+          </TouchableOpacity>
+          <StatusBar style="auto" />
+        </View>
+      </View>
+    </ImageBackground>
   );
 }
 
 /*Estilos de la aplicación*/
 const styles = StyleSheet.create({
-  container: {
+  backgroundImage: {
     flex: 1,
-    backgroundColor: '#E7D9D6',
-    alignItems: 'center',
+    resizeMode: 'cover', 
+  },
+  overlayContainer: {
+    flex: 1,
     justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'rgba(241, 241, 241, 0.8)', 
+  },
+  container: {
+    width: '80%',
+    padding: 20, 
+    borderRadius: 20, 
+    backgroundColor: 'white', 
   },
   titulo: {
     fontSize: 40,
     color: '#34434D',
     fontWeight: 'bold',
-    fontFamily: 'PlaywriteDKLoopet',
+    fontFamily: 'CrimsonText', 
   },
   subTitle: {
     fontSize: 14,
     color: 'gray',
     marginVertical: 10,
-    fontFamily: 'Roboto-Bold',
+    fontFamily: 'PlaywriteDKLoopet', 
   },
   forgotPassword: {
     fontSize: 14,
     color: '#34434D',
     marginVertical: 10,
     textDecorationLine: 'underline',
-    fontFamily: 'PlaywriteDKLoopet',
+    fontFamily: 'PlaywriteDKLoopet', 
   },
   textInput: {
     paddingStart: 30,
-    width: '80%',
+    width: '100%',
     height: 50,
     padding: 10,
     marginTop: 20,
     marginBottom: 5,
     borderRadius: 30,
     backgroundColor: '#fff',
-    fontFamily: 'PlaywriteDKLoopet',
+    fontFamily: 'PlaywriteDKLoopet', 
   },
   button: {
     backgroundColor: '#34434D',
     padding: 15,
     borderRadius: 30,
     marginTop: 20,
-    width: '80%',
+    width: '100%',
     alignItems: 'center',
   },
   buttonText: {
     color: '#fff',
     fontSize: 16,
     fontWeight: 'bold',
-    fontFamily: 'PlaywriteDKLoopet',
+    fontFamily: 'PlaywriteDKLoopet', 
   },
   errorText: {
     color: 'red',
@@ -141,4 +159,3 @@ const styles = StyleSheet.create({
     fontSize: 12,
   },
 });
-
